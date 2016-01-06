@@ -8,8 +8,13 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
+# debian bootstrap rootfs for arch
+# - Debian armhf = ARMv6/ARMv7
+# - Debian arm64 = ARMv8/Aarch64
 ENV BOOTSTRAP_ARCH=arm64
 ENV ROOTFS_DIR=/debian-${BOOTSTRAP_ARCH}
+
+# configure qemu emulation: aarch64 or arm
 ENV QEMU_ARCH=aarch64
 
 # create rootfs
