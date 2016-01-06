@@ -12,7 +12,9 @@ ENV ARCH=arm64
 ENV ROOTFS_DIR=/debian-${ARCH}
 
 # create rootfs
-CMD qemu-debootstrap \
+CMD update-binfmts --enable qemu-arm && \
+  cat /proc/sys/fs/binfmt_misc/qemu-arm && \
+  qemu-debootstrap \
   --arch="${ARCH}" \
   --include="apt-transport-https,avahi-daemon,ca-certificates,curl,htop,locales,net-tools,openssh-server,usbutils" \
   --exclude="debfoster" \
