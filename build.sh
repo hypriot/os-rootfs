@@ -28,7 +28,6 @@ else
 
   # Tell Linux how to start binaries that need emulation to use Qemu
   update-binfmts --enable qemu-${QEMU_ARCH}
-  cat /proc/sys/fs/binfmt_misc/qemu-${QEMU_ARCH}
 fi
 
 # Debootstrap a minimal Debian Jessie rootfs
