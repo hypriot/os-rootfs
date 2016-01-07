@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     binfmt-support \
     debootstrap \
     debootstrap \
+    elf-utils \
     ruby \
     --no-install-recommends && \
     gem update --system && \
