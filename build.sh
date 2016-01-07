@@ -14,6 +14,7 @@ fi
 # - Debian amd64 = Intel/AMD 64-bit
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
 QEMU_ARCH="${QEMU_ARCH}"
+HYPRIOT_TAG="${HYPRIOT_TAG:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 
 # Cleanup
@@ -97,6 +98,23 @@ echo 'locales locales/default_environment_locale select en_US.UTF-8' | chroot "$
   debconf-set-selections
 chroot "${ROOTFS_DIR}" \
   dpkg-reconfigure -f noninteractive locales
+
+
+### HypriotOS default settings ###
+
+# set hostname to 'black-pearl'
+echo 'black-pearl' | chroot "${ROOTFS_DIR}" \
+  tee /etc/hostname
+
+# set root password to 'hypriot'
+echo 'root:hypriot' | chroot "${ROOTFS_DIR}" \
+  /usr/sbin/chpasswd
+
+# set HypriotOS version infos
+echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" | chroot "${ROOTFS_DIR}" \
+  tee -a /etc/os-release
+echo "HYPRIOT_TAG=\"${HYPRIOT_TAG}\"" | chroot "${ROOTFS_DIR}" \
+  tee -a /etc/os-release
 
 
 # Package rootfs tarball
