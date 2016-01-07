@@ -2,10 +2,15 @@
 
 Create builder Docker image
 ```
-docker build -t rootfs-builder .
+make build
 ```
 
-Create rootfs's for all supported ARCH's
+Create all rootfs's for all supported ARCH's
+```
+make all
+```
+
+Create single rootfs's for all supported ARCH's
 ```
 make i386
 make amd64
