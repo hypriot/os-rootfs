@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 COPY build.sh /build.sh
-COPY files /files
 
 # create rootfs
 CMD /build.sh
