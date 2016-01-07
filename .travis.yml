@@ -11,11 +11,11 @@ script:
 deploy:
   provider: releases
   file:
-  - rootfs-armhf.tar.gz
-  - rootfs-arm64.tar.gz
-  - rootfs-amd64.tar.gz
-  - rootfs-i386.tar.gz
-  - rootfs-mips.tar.gz
+    - rootfs-armhf.tar.gz
+    - rootfs-arm64.tar.gz
+    - rootfs-amd64.tar.gz
+    - rootfs-i386.tar.gz
+    - rootfs-mips.tar.gz
   skip_cleanup: true
   on:
     tags: true
