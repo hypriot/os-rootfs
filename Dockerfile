@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     binfmt-support \
     debootstrap \
     --no-install-recommends && \
-    rm -fr /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 COPY build.sh /build.sh
 COPY files /files

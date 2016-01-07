@@ -13,6 +13,7 @@ fi
 # - Debian i386  = Intel/AMD 32-bit
 # - Debian amd64 = Intel/AMD 64-bit
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
+QEMU_ARCH="${QEMU_ARCH}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 
 # Cleanup
@@ -20,31 +21,17 @@ mkdir -p /data
 rm -fr "${ROOTFS_DIR}"
 
 # Define ARCH dependent settings
-if [ "${BUILD_ARCH}" == "i386" ] || [ "${BUILD_ARCH}" == "amd64" ];then
+if [ -z "${QEMU_ARCH}" ]; then
   DEBOOTSTRAP_CMD="debootstrap"  
 else
   DEBOOTSTRAP_CMD="qemu-debootstrap"
-
-  # Qemu settings
-  if [ "${BUILD_ARCH}" == "armhf" ];then
-    QEMU_ARCH="arm"
-  fi
-  if [ "${BUILD_ARCH}" == "arm64" ];then
-    QEMU_ARCH="aarch64"
-  fi
-  if [ "${BUILD_ARCH}" == "mips" ];then
-    QEMU_ARCH="mips"
-  fi
 
   # Define Qemu for binfmts (important to run inside of a Docker container)
   update-binfmts --enable qemu-${QEMU_ARCH}
   cat /proc/sys/fs/binfmt_misc/qemu-${QEMU_ARCH}
 fi
 
-# Debootstrap a minimal Debian Jessie rootfs 
-#  --keyring /usr/share/keyrings/debian-ports-archive-keyring.gpg \
-#  --no-check-gpg \
-#  --variant=buildd \
+# Debootstrap a minimal Debian Jessie rootfs
 ${DEBOOTSTRAP_CMD} \
   --arch="${BUILD_ARCH}" \
   --include="apt-transport-https,avahi-daemon,ca-certificates,curl,htop,locales,net-tools,openssh-server,usbutils" \
@@ -111,25 +98,6 @@ echo 'locales locales/default_environment_locale select en_US.UTF-8' | chroot "$
   debconf-set-selections
 chroot "${ROOTFS_DIR}" \
   dpkg-reconfigure -f noninteractive locales
-
-
-### HypriotOS specific settings ###
-
-# set hostname to 'black-pearl'
-echo 'black-pearl' | chroot "${ROOTFS_DIR}" \
-  tee /etc/hostname
-
-# set root password to 'hypriot'
-echo 'root:hypriot' | chroot "${ROOTFS_DIR}" \
-  /usr/sbin/chpasswd
-
-# set HypriotOS bash prompt for root user
-cat /files/bash_prompt/bashrc | chroot "${ROOTFS_DIR}" \
-  tee /root/.bashrc
-cat /files/bash_prompt/bash_prompt | chroot "${ROOTFS_DIR}" \
-  tee /root/.bash_prompt
-cat /files/bash_prompt/profile | chroot "${ROOTFS_DIR}" \
-  tee /root/.profile
 
 
 # Package rootfs tarball
