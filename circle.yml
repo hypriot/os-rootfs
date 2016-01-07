@@ -3,11 +3,6 @@ machine:
   services:
     - docker
 
-dependencies:
-  pre:
-    - sudo apt-get update
-    - sudo apt-get install -y qemu qemu-user-static binfmt-support debootstrap --no-install-recommends
-
 test:
   override:
     - make amd64
