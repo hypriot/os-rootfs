@@ -1,4 +1,4 @@
-# os-rootfs
+# os-rootfs [![Build Status](https://travis-ci.org/hypriot/os-rootfs.svg)](https://travis-ci.org/hypriot/os-rootfs)
 
 Create builder Docker image
 ```
