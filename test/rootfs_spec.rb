@@ -15,9 +15,9 @@ end
 
 describe file('etc/apt/sources.list') do
   it { should be_file }
-  its(:content) { should contain /deb http:\/\/httpredir.debian.org\/debian jessie main/ }
-  its(:content) { should contain /deb http:\/\/httpredir.debian.org\/debian jessie-updates main/ }
-  its(:content) { should contain /deb http:\/\/security.debian.org\/ jessie\/updates main/ }
+  its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie main' }
+  its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie-updates main' }
+  its(:content) { should contain 'deb http://security.debian.org/ jessie/updates main' }
 end
 
 describe file('etc/systemd/network/eth0.network') do
@@ -38,20 +38,11 @@ end
 
 describe file('etc/os-release') do
   it { should be_file }
-  its(:content) { should contain /HYPRIOT_/ }
+  its(:content) { should contain /HYPRIOT_OS=/ }
+  its(:content) { should contain /HYPRIOT_TAG=/ }
 end
 
 describe file('/etc/hostname') do
   it { should be_file }
   its(:content) { should contain /black-pearl/ }
-end
-
-describe file('/etc/hostname') do
-  it { should be_file }
-  its(:content) { should contain /black-pearl/ }
-end
-
-describe file('/etc/shadow') do
-  it { should be_file }
-  its(:content) { should_not contain /root:*/ }
 end
