@@ -41,8 +41,3 @@ describe file('etc/os-release') do
   its(:content) { should contain /HYPRIOT_OS=/ }
   its(:content) { should contain /HYPRIOT_TAG=/ }
 end
-
-describe file('/etc/hostname') do
-  it { should be_file }
-  its(:content) { should contain /black-pearl/ }
-end
