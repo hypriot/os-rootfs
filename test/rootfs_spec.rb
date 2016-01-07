@@ -38,6 +38,20 @@ end
 
 describe file('etc/os-release') do
   it { should be_file }
-  its(:content) { should contain /HypriotOS/ }
+  its(:content) { should contain /HYPRIOT_/ }
 end
 
+describe file('/etc/hostname') do
+  it { should be_file }
+  its(:content) { should contain /black-pearl/ }
+end
+
+describe file('/etc/hostname') do
+  it { should be_file }
+  its(:content) { should contain /black-pearl/ }
+end
+
+describe file('/etc/shadow') do
+  it { should be_file }
+  its(:content) { should_not contain /root:*/ }
+end
