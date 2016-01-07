@@ -15,6 +15,7 @@ RUN gem update --no-document --system && \
     gem install --no-document serverspec
 
 COPY build.sh /build.sh
+COPY test.sh /test.sh
 COPY test /test
 
 # create rootfs
