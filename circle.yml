@@ -1,0 +1,22 @@
+
+machine:
+  timezone: UTC
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - sudo apt-get update
+    - sudo apt-get install -y qemu qemu-user-static binfmt-support debootstrap debian-ports-archive-keyring --no-install-recommends
+    - docker version
+    - docker info
+  post:
+    - docker build -t builder .
+
+test:
+  override:
+    - docker run --rm --privileged -e BUILD_ARCH=armhf -v $(pwd):/data builder /build.sh
+    - mv rootfs-armhf.tar.gz $CIRCLE_ARTIFACTS/
+    - docker run --rm --privileged -e BUILD_ARCH=arm64 -v $(pwd):/data builder /build.sh
+    - mv rootfs-arm64.tar.gz $CIRCLE_ARTIFACTS/
+
