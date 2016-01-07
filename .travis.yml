@@ -3,20 +3,14 @@ services:
   - docker
 language: bash
 script:
-  - make amd64
-  - make i386
   - make arm64
   - make armhf
-  - make mips
 deploy:
   provider: releases
   skip_cleanup: true
   file:
     - rootfs-armhf.tar.gz
     - rootfs-arm64.tar.gz
-    - rootfs-amd64.tar.gz
-    - rootfs-i386.tar.gz
-    - rootfs-mips.tar.gz
   on:
     tags: true
     repo: hypriot/os-rootfs
