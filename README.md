@@ -24,3 +24,26 @@ Run container in interactive mode (for testing purposes)
 ```
 make shell
 ```
+
+
+# How to run tests
+
+### Option 1: Run tests with a single command
+With the following command, all tests for a specific architecture will be executed:
+
+  ```
+  BUILD_ARCH=arm64 make test
+  ```
+
+### Option 2: Run tests interactively
+If you prefer to have a shorter feedback loop of less than a second, enter the container with
+
+  ```
+  make testshell
+  ```
+
+Now, to run the test, execute
+
+  ```
+  BUILD_ARCH=arm64 /test.sh
+  ```
