@@ -28,7 +28,7 @@ end
 
 describe file('etc/ssh/sshd_config') do
   it { should be_file }
-  its(:content) { should contain /PermitRootLogin yes/ }
+  its(:content) { should contain /^PermitRootLogin yes/ }
 end
 
 describe file('etc/locale.gen') do

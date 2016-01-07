@@ -9,9 +9,10 @@ RUN apt-get update && apt-get install -y \
     elfutils \
     ruby \
     --no-install-recommends && \
-    gem update --system && \
-    gem install serverspec && \
     rm -rf /var/lib/apt/lists/*
+
+RUN gem update --no-document --system && \
+    gem install --no-document serverspec
 
 COPY build.sh /build.sh
 COPY test /test
