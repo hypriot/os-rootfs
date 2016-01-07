@@ -26,7 +26,7 @@ if [ -z "${QEMU_ARCH}" ]; then
 else
   DEBOOTSTRAP_CMD="qemu-debootstrap"
 
-  # Define Qemu for binfmts (important to run inside of a Docker container)
+  # Tell Linux how to start binaries that need emulation to use Qemu
   update-binfmts --enable qemu-${QEMU_ARCH}
   cat /proc/sys/fs/binfmt_misc/qemu-${QEMU_ARCH}
 fi
