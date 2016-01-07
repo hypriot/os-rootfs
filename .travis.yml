@@ -10,15 +10,15 @@ script:
   - make mips
 deploy:
   provider: releases
+  skip_cleanup: true
   file:
     - rootfs-armhf.tar.gz
     - rootfs-arm64.tar.gz
     - rootfs-amd64.tar.gz
     - rootfs-i386.tar.gz
     - rootfs-mips.tar.gz
-  skip_cleanup: true
   on:
     tags: true
     repo: hypriot/os-rootfs
-  api-key:
-    secure: vb0KUiIPXOW2zJreFLbpVCsETs3q/+W7NPZSN237Ar1c3zuEBmW+57b/QaYvBeJeGNbv62N61/gjgTa5jL8n/3PlcHFAEgFvPbkGiRusYc2j6uSCUc6pZPFW3VzhQ74IFl7Hy6M8L/Th88Edjbq0q+w1L/MyqhUPxCGmG+/daosecPy0CttmLyF5iLMllPB/XZvH1BIq2w4DCp2DnwSvtm/unD1WfrrQLGQWqt1f0l3Lt5gQ7XxdBm67f4hp82oajxGSmAGupDzVUlAIbt8YORdZzOeKftTsIU0dQmOYYsskzmz7GTgjVzh87u0v4M96bvAMGlwZanEifUvBQ/T2TAHCZg6JQEWVaDNJF+YQHBatnjqWGT2j839IIart7bi4CZPoKj/SEaSf7DDzO1ArdV0HmlcB783QSFx3D+VkNHAUXAztbPKzPi5Fgx+nnUNm4Mo/DEFPAhL4shziUE6qG8WjTNw0LkDLNFpYK+oicqc9x9hkQ+ZcUIJ4vufSrrtjvoSSFIFr5AzA3iwTYsvA+g/6Cu0C4bPucl+jn8YI5VSAMliSasoCkUCjnSV1Hi+KwvkbLzP4KcEQ+m/7L1nG4Vs7ZokoZQhgZiCzUiATXtzpV41EStsj+rEiOvWBmifEe2MYI7xBHWcrt75As9HNUBgEN5rJ4ayqvEzTeZ4B9Fo=
+  api_key:
+    secure: EMPAsheQaVn8DrLDuh74qmG8I+OVfB5g+dRXp2U55B39NBULHV+nDgjXJR0k4tHnGY9+azsMYkJXziphKQzmpMsFpiNbeBRg0dhWNJyB6V7xIIchxcNiEBc+qhbsDLAeByjoXSLV3IE/bvnQRhTydHqsq60/EetpBTWv/afK03w43AwOBABDiYZonE5HXgrgP0L7CHg4l/hc3KCfisc4SykOqzSmlJ6JD+YZGNWe1cwb5Plf9iardfYn/U3gYpTWhqC19fV6kUNb7mB76TNv4mlbQLnC8/Yie/Z/a+QaSGDQAGzduzxlb2m/5Gbm7BRGN4XD97JdHRIkAuOCEqLsRwzQBfiRX9A5cG/SRHYWomaPh+10+4hx8pwCxvnhHFh4nuDinIkUmxwKpX7HAcq6hVQb0KVBQaZ6qo2tisDlEG4L3HMU/sddae/MA33Nk25Ql3dA67zBDB1Lf/d0Z/9oKDqBwNs8lI4soFM1/cTel3sXwnbIJWROvVOphABc1sGQlRF5HMJZODmVeYag+h4/u/njgA4uW/p8DEbSDT56pHvEfvZdjAl1zrDUJmTP509TsTkfHsBNIjxnAFbCVSgCOD3OdnbuM+5mzoK4foTUZNV0/TjcCY858wKiPE3LZIpZW3G6HtyLbyZ9n7ABsxs48npfSbjpH6umpGiW5IrA9uI=
