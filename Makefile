@@ -22,3 +22,9 @@ mips: build
 
 shell: build
 	docker run --rm -ti -v $(shell pwd):/data --privileged rootfs-builder bash
+
+test-amd64:
+	docker run --rm -ti -e BUILD_ARCH=amd64 -v $(shell pwd):/data -v $(shell pwd)/test:/test --privileged rootfs-builder bash
+
+test-arm64:
+	docker run --rm -ti -e BUILD_ARCH=arm64 -e QEMU_ARCH=aarch64 -v $(shell pwd):/data -v $(shell pwd)/test:/test --privileged rootfs-builder bash
