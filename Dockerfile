@@ -5,7 +5,6 @@ RUN apt-get update && apt-get install -y \
     qemu-user-static \
     binfmt-support \
     debootstrap \
-    debootstrap \
     elfutils \
     ruby \
     --no-install-recommends && \

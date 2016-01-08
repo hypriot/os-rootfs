@@ -14,7 +14,6 @@ Create single rootfs's for all supported ARCH's
 ```
 make i386
 make amd64
-
 make armhf
 make arm64
 make mips
