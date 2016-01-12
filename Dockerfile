@@ -13,9 +13,7 @@ RUN apt-get update && apt-get install -y \
 RUN gem update --no-document --system && \
     gem install --no-document serverspec
 
-COPY build.sh /build.sh
-COPY test.sh /test.sh
-COPY test /test
+COPY builder /builder/
 
 # create rootfs
-CMD /build.sh
+CMD /builder/build.sh

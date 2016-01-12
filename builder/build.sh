@@ -142,4 +142,4 @@ umask 0000
 tar -czf "/data/rootfs-${BUILD_ARCH}.tar.gz" -C "${ROOTFS_DIR}/" .
 
 # Test if rootfs is OK
-/test.sh
+/builder/test.sh

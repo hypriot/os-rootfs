@@ -24,4 +24,4 @@ if [ ! -d "${ROOTFS_DIR}" ]; then
 fi
 
 # Test if rootfs is OK
-cd "${ROOTFS_DIR}" && rspec /test
+cd "${ROOTFS_DIR}" && rspec /builder/test

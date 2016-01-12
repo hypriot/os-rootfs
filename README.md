@@ -44,5 +44,5 @@ If you prefer to have a shorter feedback loop of less than a second, enter the c
 Now, to run the test, execute
 
   ```
-  BUILD_ARCH=arm64 /test.sh
+  BUILD_ARCH=arm64 /builder/test.sh
   ```

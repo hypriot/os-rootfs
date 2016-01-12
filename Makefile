@@ -24,7 +24,7 @@ shell: build
 	docker run --rm -ti -v $(shell pwd):/data --privileged rootfs-builder bash
 
 test: build
-	docker run --rm -ti -e BUILD_ARCH=$(BUILD_ARCH) -v $(shell pwd):/data --privileged rootfs-builder /test.sh
+	docker run --rm -ti -e BUILD_ARCH=$(BUILD_ARCH) -v $(shell pwd):/data --privileged rootfs-builder /builder/test.sh
 
 testshell: build
 	docker run --rm -ti -v $(shell pwd):/data -v $(shell pwd)/test:/test --privileged rootfs-builder bash
