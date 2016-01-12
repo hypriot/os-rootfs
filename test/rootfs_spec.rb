@@ -28,7 +28,12 @@ end
 
 describe file('etc/ssh/sshd_config') do
   it { should be_file }
-  its(:content) { should contain /^PermitRootLogin yes/ }
+  its(:content) { should contain /^PermitRootLogin without-password/ }
+end
+
+describe file('etc/shadow') do
+  it { should be_file }
+  its(:content) { should contain /^root:\*:/ }
 end
 
 describe file('etc/locale.gen') do

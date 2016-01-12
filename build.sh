@@ -79,10 +79,6 @@ chroot "${ROOTFS_DIR}" \
 chroot "${ROOTFS_DIR}" \
   systemctl enable systemd-resolved
 
-# Enable SSH root login
-chroot "${ROOTFS_DIR}" \
-  sed -i 's|PermitRootLogin without-password|PermitRootLogin yes|g' /etc/ssh/sshd_config
-
 # Enable NTP with timesyncd
 chroot "${ROOTFS_DIR}" \
   sed -i 's|#Servers=|Servers=|g' /etc/systemd/timesyncd.conf
@@ -105,10 +101,6 @@ chroot "${ROOTFS_DIR}" \
 # set hostname to 'black-pearl'
 echo 'black-pearl' | chroot "${ROOTFS_DIR}" \
   tee /etc/hostname
-
-# set root password to 'hypriot'
-echo 'root:hypriot' | chroot "${ROOTFS_DIR}" \
-  /usr/sbin/chpasswd
 
 # set HypriotOS version infos
 echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" | chroot "${ROOTFS_DIR}" \
