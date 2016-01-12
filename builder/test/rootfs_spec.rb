@@ -76,6 +76,22 @@ describe file('etc/sudoers.d/user-pirate') do
   its(:content) { should contain /^pirate ALL=NOPASSWD: ALL$/ }
 end
 
+describe file('root/.bash_prompt') do
+  it { should be_file }
+end
+
+describe file('etc/skel/.bash_prompt') do
+  it { should be_file }
+end
+
+describe file('etc/skel/.bashrc') do
+  it { should be_file }
+end
+
+describe file('etc/skel/.profile') do
+  it { should be_file }
+end
+
 describe file('etc/os-release') do
   it { should be_file }
   its(:content) { should contain /HYPRIOT_OS=/ }
