@@ -62,6 +62,12 @@ deb http://security.debian.org/ jessie/updates main
 deb-src http://security.debian.org/ jessie/updates main
 EOM
 
+# upgrade to latest Debian package versions
+chroot "${ROOTFS_DIR}" <<"EOF"
+apt-get update
+apt-get upgrade -y
+EOF
+
 
 ### Configure network and systemd services ###
 
