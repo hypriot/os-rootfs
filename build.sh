@@ -6,6 +6,12 @@ if [ ! -f /.dockerinit ]; then
   exit 1
 fi
 
+# Hypriot common settings
+HYPRIOT_HOSTNAME="black-pearl"
+HYPRIOT_GROUPNAME="docker"
+HYPRIOT_USERNAME="pirate"
+HYPRIOT_PASSWORD="hypriot"
+
 # Build Debian rootfs for ARCH={armhf,arm64,mips,i386,amd64}
 # - Debian armhf = ARMv6/ARMv7
 # - Debian arm64 = ARMv8/Aarch64
@@ -101,9 +107,22 @@ chroot "${ROOTFS_DIR}" \
 
 ### HypriotOS default settings ###
 
-# set hostname to 'black-pearl'
-echo 'black-pearl' | chroot "${ROOTFS_DIR}" \
+# set hostname
+echo "$HYPRIOT_HOSTNAME" | chroot "${ROOTFS_DIR}" \
   tee /etc/hostname
+
+# install Hypriot group and user
+chroot "${ROOTFS_DIR}" \
+  addgroup --system --quiet $HYPRIOT_GROUPNAME
+chroot "${ROOTFS_DIR}" \
+  useradd -m $HYPRIOT_USERNAME --group $HYPRIOT_GROUPNAME --shell /bin/bash
+echo "$HYPRIOT_USERNAME:$HYPRIOT_PASSWORD" | chroot "${ROOTFS_DIR}" \
+  /usr/sbin/chpasswd
+# add user to sudoers group
+echo "$HYPRIOT_USERNAME ALL=NOPASSWD: ALL" | chroot "${ROOTFS_DIR}"  \
+  tee /etc/sudoers.d/user-$HYPRIOT_USERNAME
+chroot "${ROOTFS_DIR}" \
+  chmod 0440 /etc/sudoers.d/user-$HYPRIOT_USERNAME
 
 # set HypriotOS version infos
 echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" | chroot "${ROOTFS_DIR}" \

@@ -49,6 +49,33 @@ describe file('etc/locale.gen') do
   its(:content) { should contain /en_US.UTF-8/ }
 end
 
+describe file('etc/hostname') do
+  it { should be_file }
+  its(:content) { should contain /^black-pearl$/ }
+end
+
+describe file('etc/group') do
+  it { should be_file }
+  its(:content) { should contain /^docker:x:.*:pirate/ }
+  its(:content) { should contain /^pirate:x:/ }
+end
+
+describe file('etc/passwd') do
+  it { should be_file }
+  its(:content) { should contain /^pirate:/ }
+end
+
+describe file('etc/shadow') do
+  it { should be_file }
+  its(:content) { should contain /^pirate:/ }
+end
+
+describe file('etc/sudoers.d/user-pirate') do
+  it { should be_file }
+  it { should be_mode 440 }
+  its(:content) { should contain /^pirate ALL=NOPASSWD: ALL$/ }
+end
+
 describe file('etc/os-release') do
   it { should be_file }
   its(:content) { should contain /HYPRIOT_OS=/ }
