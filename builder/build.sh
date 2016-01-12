@@ -24,7 +24,7 @@ HYPRIOT_TAG="${HYPRIOT_TAG:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 
 # Cleanup
-mkdir -p /data
+mkdir -p /workspace
 rm -fr "${ROOTFS_DIR}"
 
 # Define ARCH dependent settings
@@ -139,7 +139,7 @@ echo "HYPRIOT_TAG=\"${HYPRIOT_TAG}\"" | chroot "${ROOTFS_DIR}" \
 
 # Package rootfs tarball
 umask 0000
-tar -czf "/data/rootfs-${BUILD_ARCH}.tar.gz" -C "${ROOTFS_DIR}/" .
+tar -czf "/workspace/rootfs-${BUILD_ARCH}.tar.gz" -C "${ROOTFS_DIR}/" .
 
 # Test if rootfs is OK
 /builder/test.sh

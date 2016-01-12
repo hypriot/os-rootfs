@@ -9,11 +9,11 @@ fi
 # Build Debian rootfs for ARCH={armhf,arm64,mips,i386,amd64}
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
-ROOTFS_TAR="/data/rootfs-${BUILD_ARCH}.tar.gz"
+ROOTFS_TAR="/workspace/rootfs-${BUILD_ARCH}.tar.gz"
 
 # Cleanup
 echo "Testing: BUILD_ARCH=${BUILD_ARCH}"
-mkdir -p /data
+mkdir -p /workspace
 if [ ! -d "${ROOTFS_DIR}" ]; then
   mkdir -p "${ROOTFS_DIR}"
   if [ ! -f "${ROOTFS_TAR}" ]; then
