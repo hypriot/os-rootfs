@@ -34,7 +34,7 @@ fi
 # Debootstrap a minimal Debian Jessie rootfs
 ${DEBOOTSTRAP_CMD} \
   --arch="${BUILD_ARCH}" \
-  --include="apt-transport-https,avahi-daemon,ca-certificates,curl,htop,locales,net-tools,openssh-server,usbutils" \
+  --include="apt-transport-https,avahi-daemon,bash-completion,bin-utils,ca-certificates,curl,git-core,htop,locales,net-tools,openssh-server,parted,sudo,usbutils" \
   --exclude="debfoster" \
   jessie \
   "${ROOTFS_DIR}" \
