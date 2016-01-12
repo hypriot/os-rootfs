@@ -117,6 +117,11 @@ chroot "${ROOTFS_DIR}" \
 echo "$HYPRIOT_HOSTNAME" | chroot "${ROOTFS_DIR}" \
   tee /etc/hostname
 
+#FIXME: create dedicated Hypriot .deb package
+# install bash prompt as skeleton files (root and default for all new users)
+cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/root/
+cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/etc/skel/
+
 # install Hypriot group and user
 chroot "${ROOTFS_DIR}" \
   addgroup --system --quiet $HYPRIOT_GROUPNAME
@@ -129,11 +134,6 @@ echo "$HYPRIOT_USERNAME ALL=NOPASSWD: ALL" | chroot "${ROOTFS_DIR}"  \
   tee /etc/sudoers.d/user-$HYPRIOT_USERNAME
 chroot "${ROOTFS_DIR}" \
   chmod 0440 /etc/sudoers.d/user-$HYPRIOT_USERNAME
-
-#FIXME: create dedicated Hypriot .deb package
-# install bash prompt as skeleton files (root and default for all new users)
-cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/root/
-cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/etc/skel/
 
 # set HypriotOS version infos
 echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" | chroot "${ROOTFS_DIR}" \
