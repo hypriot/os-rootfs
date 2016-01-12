@@ -26,6 +26,14 @@ describe file('etc/systemd/network/eth0.network') do
   its(:content) { should contain /DHCP=yes/ }
 end
 
+describe file('etc/resolv.conf') do
+  it { should be_symlink }
+end
+
+describe file('run/systemd/resolve/resolv.conf') do
+  it { should be_file }
+end
+
 describe file('etc/ssh/sshd_config') do
   it { should be_file }
   its(:content) { should contain /^PermitRootLogin without-password/ }

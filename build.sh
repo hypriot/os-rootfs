@@ -74,10 +74,13 @@ chroot "${ROOTFS_DIR}" \
   systemctl enable systemd-networkd
 
 # Configure and enable resolved
-chroot "${ROOTFS_DIR}" \
-  ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
-chroot "${ROOTFS_DIR}" \
-  systemctl enable systemd-resolved
+chroot "${ROOTFS_DIR}" <<"EOF"
+ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
+DEST=$(readlink -m /etc/resolv.conf)
+mkdir -p $(dirname $DEST)
+touch /etc/resolv.conf
+systemctl enable systemd-resolved
+EOF
 
 # Enable NTP with timesyncd
 chroot "${ROOTFS_DIR}" \
