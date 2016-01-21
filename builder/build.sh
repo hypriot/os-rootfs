@@ -51,6 +51,14 @@ ${DEBOOTSTRAP_CMD} \
 cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/root/
 cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/etc/skel/
 
+# set up mount points for the pseudo filesystems
+mkdir -p $ROOTFS_DIR/{proc,sys,dev/pts}
+
+mount -o bind /dev $ROOTFS_DIR/dev
+mount -o bind /dev/pts $ROOTFS_DIR/dev/pts
+mount -t proc none $ROOTFS_DIR/proc
+mount -t sysfs none $ROOTFS_DIR/sys
+
 # make our build directory the current root
 # and install the Rasberry Pi firmware, kernel packages,
 # docker tools and some customizations
@@ -63,6 +71,15 @@ chroot $ROOTFS_DIR \
        HYPRIOT_TAG=$HYPRIOT_TAG \
        BUILD_ARCH=$BUILD_ARCH \
        /bin/bash < /builder/chroot-script.sh
+
+# unmount pseudo filesystems
+umount -l $ROOTFS_DIR/dev/pts
+umount -l $ROOTFS_DIR/dev
+umount -l $ROOTFS_DIR/proc
+umount -l $ROOTFS_DIR/sys
+
+# ensure that there are no leftover artifacts in the pseudo filesystems
+rm -rf $ROOTFS_DIR/{dev,sys,proc}/*
 
 # Package rootfs tarball
 umask 0000
