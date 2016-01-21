@@ -55,7 +55,7 @@ cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/etc/skel/
 # and install the Rasberry Pi firmware, kernel packages,
 # docker tools and some customizations
 chroot $ROOTFS_DIR \
-       /usr/bin/env -i \
+       /usr/bin/env \
        HYPRIOT_HOSTNAME=$HYPRIOT_HOSTNAME \
        HYPRIOT_GROUPNAME=$HYPRIOT_GROUPNAME \
        HYPRIOT_USERNAME=$HYPRIOT_USERNAME \
