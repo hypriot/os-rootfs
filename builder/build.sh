@@ -46,101 +46,40 @@ ${DEBOOTSTRAP_CMD} \
   "${ROOTFS_DIR}" \
   http://ftp.debian.org/debian
 
-
-### Configure Debian ###
-
-# Use standard Debian apt repositories
-cat << EOM | chroot "${ROOTFS_DIR}" \
-  tee /etc/apt/sources.list
-deb http://httpredir.debian.org/debian jessie main
-deb-src http://httpredir.debian.org/debian jessie main
-
-deb http://httpredir.debian.org/debian jessie-updates main
-deb-src http://httpredir.debian.org/debian jessie-updates main
-
-deb http://security.debian.org/ jessie/updates main
-deb-src http://security.debian.org/ jessie/updates main
-EOM
-
-# upgrade to latest Debian package versions
-chroot "${ROOTFS_DIR}" <<"EOF"
-apt-get update
-apt-get upgrade -y
-EOF
-
-
-### Configure network and systemd services ###
-
-# Set ethernet interface eth0 to dhcp
-cat << EOM | chroot "${ROOTFS_DIR}" \
-  tee /etc/systemd/network/eth0.network
-[Match]
-Name=eth0
-
-[Network]
-DHCP=yes
-EOM
-
-# Enable networkd
-chroot "${ROOTFS_DIR}" \
-  systemctl enable systemd-networkd
-
-# Configure and enable resolved
-chroot "${ROOTFS_DIR}" <<"EOF"
-ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
-DEST=$(readlink -m /etc/resolv.conf)
-mkdir -p $(dirname $DEST)
-touch /etc/resolv.conf
-systemctl enable systemd-resolved
-EOF
-
-# Enable NTP with timesyncd
-chroot "${ROOTFS_DIR}" \
-  sed -i 's|#Servers=|Servers=|g' /etc/systemd/timesyncd.conf
-chroot "${ROOTFS_DIR}" \
-  systemctl enable systemd-timesyncd
-  
-# Set default locales to 'en_US.UTF-8'
-echo 'en_US.UTF-8 UTF-8' | chroot "${ROOTFS_DIR}" \
-  tee -a /etc/locale.gen
-chroot "${ROOTFS_DIR}" \
-  locale-gen
-echo 'locales locales/default_environment_locale select en_US.UTF-8' | chroot "${ROOTFS_DIR}" \
-  debconf-set-selections
-chroot "${ROOTFS_DIR}" \
-  dpkg-reconfigure -f noninteractive locales
-
-
-### HypriotOS default settings ###
-
-# set hostname
-echo "$HYPRIOT_HOSTNAME" | chroot "${ROOTFS_DIR}" \
-  tee /etc/hostname
-
 #FIXME: create dedicated Hypriot .deb package
 # install bash prompt as skeleton files (root and default for all new users)
 cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/root/
 cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/etc/skel/
 
-# install Hypriot group and user
-chroot "${ROOTFS_DIR}" \
-  addgroup --system --quiet $HYPRIOT_GROUPNAME
-chroot "${ROOTFS_DIR}" \
-  useradd -m $HYPRIOT_USERNAME --group $HYPRIOT_GROUPNAME --shell /bin/bash
-echo "$HYPRIOT_USERNAME:$HYPRIOT_PASSWORD" | chroot "${ROOTFS_DIR}" \
-  /usr/sbin/chpasswd
-# add user to sudoers group
-echo "$HYPRIOT_USERNAME ALL=NOPASSWD: ALL" | chroot "${ROOTFS_DIR}"  \
-  tee /etc/sudoers.d/user-$HYPRIOT_USERNAME
-chroot "${ROOTFS_DIR}" \
-  chmod 0440 /etc/sudoers.d/user-$HYPRIOT_USERNAME
+# set up mount points for the pseudo filesystems
+mkdir -p $ROOTFS_DIR/{proc,sys,dev/pts}
 
-# set HypriotOS version infos
-echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" | chroot "${ROOTFS_DIR}" \
-  tee -a /etc/os-release
-echo "HYPRIOT_TAG=\"${HYPRIOT_TAG}\"" | chroot "${ROOTFS_DIR}" \
-  tee -a /etc/os-release
+mount -o bind /dev $ROOTFS_DIR/dev
+mount -o bind /dev/pts $ROOTFS_DIR/dev/pts
+mount -t proc none $ROOTFS_DIR/proc
+mount -t sysfs none $ROOTFS_DIR/sys
 
+# make our build directory the current root
+# and install the Rasberry Pi firmware, kernel packages,
+# docker tools and some customizations
+chroot $ROOTFS_DIR \
+       /usr/bin/env \
+       HYPRIOT_HOSTNAME=$HYPRIOT_HOSTNAME \
+       HYPRIOT_GROUPNAME=$HYPRIOT_GROUPNAME \
+       HYPRIOT_USERNAME=$HYPRIOT_USERNAME \
+       HYPRIOT_PASSWORD=$HYPRIOT_PASSWORD \
+       HYPRIOT_TAG=$HYPRIOT_TAG \
+       BUILD_ARCH=$BUILD_ARCH \
+       /bin/bash < /builder/chroot-script.sh
+
+# unmount pseudo filesystems
+umount -l $ROOTFS_DIR/dev/pts
+umount -l $ROOTFS_DIR/dev
+umount -l $ROOTFS_DIR/proc
+umount -l $ROOTFS_DIR/sys
+
+# ensure that there are no leftover artifacts in the pseudo filesystems
+rm -rf $ROOTFS_DIR/{dev,sys,proc}/*
 
 # Package rootfs tarball
 umask 0000
