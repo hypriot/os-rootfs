@@ -58,6 +58,9 @@ dpkg-reconfigure -f noninteractive locales
 # set hostname
 echo "$HYPRIOT_HOSTNAME" > /etc/hostname
 
+# install skeleton files from /etc/skel for root user
+cp /etc/skel/{.bash_prompt,.bashrc,.profile} /root/
+
 # install Hypriot group and user
 addgroup --system --quiet $HYPRIOT_GROUPNAME
 useradd -m $HYPRIOT_USERNAME --group $HYPRIOT_GROUPNAME --shell /bin/bash
