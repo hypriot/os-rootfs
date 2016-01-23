@@ -128,14 +128,8 @@ describe "Firstboot Systemd Service" do
     expect(config_dir).to be_directory
   end
 
-  it "has a script to set date and time" do
-    script = file('etc/firstboot.d/50-set-date-and-time')
-
-    expect(script).to exist
-  end
-
   it "has a script to regenerate sshd host keys" do
-    script = file('etc/firstboot.d/60-regenerate-sshd-host-keys')
+    script = file('etc/firstboot.d/50-regenerate-sshd-host-keys')
 
     expect(script).to exist
   end
