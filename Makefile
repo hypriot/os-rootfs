@@ -28,3 +28,7 @@ test: build
 
 testshell: build
 	docker run --rm -ti -v $(shell pwd):/workspace -v $(shell pwd)/test:/test --privileged rootfs-builder bash
+
+tag:
+	git tag ${TAG}
+	git push origin ${TAG}
