@@ -1,0 +1,9 @@
+[Unit]
+Description=run task that need to be run on first boot only
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/hypriot-firstboot
+
+[Install]
+WantedBy=multi-user.target

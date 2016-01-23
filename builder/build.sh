@@ -46,10 +46,8 @@ ${DEBOOTSTRAP_CMD} \
   "${ROOTFS_DIR}" \
   http://ftp.debian.org/debian
 
-#FIXME: create dedicated Hypriot .deb package
-# install bash prompt as skeleton files (root and default for all new users)
-cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/root/
-cp /builder/files/etc/skel/{.bash_prompt,.bashrc,.profile} $ROOTFS_DIR/etc/skel/
+# modify/add image files directly
+cp -R /builder/files/* $ROOTFS_DIR/
 
 # set up mount points for the pseudo filesystems
 mkdir -p $ROOTFS_DIR/{proc,sys,dev/pts}

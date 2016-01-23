@@ -97,3 +97,41 @@ describe file('etc/os-release') do
   its(:content) { should contain /HYPRIOT_OS=/ }
   its(:content) { should contain /HYPRIOT_TAG=/ }
 end
+
+describe "Firstboot Systemd Service" do
+
+  it "has a service file" do
+    service_file = file('lib/systemd/system/hypriot-firstboot.service')
+
+    expect(service_file).to exist
+  end
+
+  it "is enabled" do
+    service_symlink = file('lib/systemd/system/multi-user.target.wants/hypriot-firstboot.service')
+
+    expect(service_symlink).to exist
+    expect(service_symlink).to be_symlink
+    expect(service_symlink).to be_linked_to '../hypriot-firstboot.service'
+  end
+
+  it "has a hypriot-firstboot script to execute" do
+    executable = file('usr/local/bin/hypriot-firstboot')
+
+    expect(executable).to exist
+    expect(executable).to be_executable
+  end
+
+  it "has a /etc/firstboot.d config directory" do
+    config_dir = file('etc/firstboot.d')
+
+    expect(config_dir).to exist
+    expect(config_dir).to be_directory
+  end
+
+  it "has a script to regenerate sshd host keys" do
+    script = file('etc/firstboot.d/50-regenerate-sshd-host-keys')
+
+    expect(script).to exist
+  end
+
+end
