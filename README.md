@@ -1,6 +1,6 @@
 # os-rootfs
 [![Join the chat at https://gitter.im/hypriot/talk](https://badges.gitter.im/hypriot/talk.svg)](https://gitter.im/hypriot/talk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/hypriot/os-rootfs.svg)](https://travis-ci.org/hypriot/os-rootfs)
+[![Build Status](https://travis-ci.org/hypriot/os-rootfs.svg)](https://travis-ci.org/hypriot/os-rootfs) [![Release](https://img.shields.io/github/release/hypriot/os-rootfs.svg)](https://github.com/hypriot/os-rootfs/releases)
 
 Create builder Docker image
 ```
