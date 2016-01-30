@@ -96,6 +96,9 @@ describe file('etc/os-release') do
   it { should be_file }
   its(:content) { should contain /HYPRIOT_OS=/ }
   its(:content) { should contain /HYPRIOT_TAG=/ }
+  if ENV.fetch('TRAVIS_TAG','') != ''
+    its(:content) { should_not contain /dirty/ }
+  end
 end
 
 describe "Firstboot Systemd Service" do

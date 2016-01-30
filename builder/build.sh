@@ -23,13 +23,16 @@ QEMU_ARCH="${QEMU_ARCH}"
 HYPRIOT_TAG="${HYPRIOT_TAG:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 
+# Show TRAVSI_TAG in travis builds
+echo TRAVIS_TAG="${TRAVIS_TAG}"
+
 # Cleanup
 mkdir -p /workspace
 rm -fr "${ROOTFS_DIR}"
 
 # Define ARCH dependent settings
 if [ -z "${QEMU_ARCH}" ]; then
-  DEBOOTSTRAP_CMD="debootstrap"  
+  DEBOOTSTRAP_CMD="debootstrap"
 else
   DEBOOTSTRAP_CMD="qemu-debootstrap"
 
