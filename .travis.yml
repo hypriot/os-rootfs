@@ -3,8 +3,8 @@ services:
   - docker
 language: bash
 script:
-  - make arm64
-  - make armhf
+  - HYPRIOT_TAG=${TRAVIS_TAG} make arm64
+  - HYPRIOT_TAG=${TRAVIS_TAG} make armhf
 deploy:
   provider: releases
   skip_cleanup: true
