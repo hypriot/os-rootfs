@@ -9,7 +9,7 @@ This root filesystem
 * uses a minimal Debian system
 * adds an user pirate
 * sets a default locale (UTF-8)
-* sets a default timezone
+* sets a default timezone (UTC)
 * ...
 
 
