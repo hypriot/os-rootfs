@@ -2,6 +2,27 @@
 [![Join the chat at https://gitter.im/hypriot/talk](https://badges.gitter.im/hypriot/talk.svg)](https://gitter.im/hypriot/talk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/hypriot/os-rootfs.svg)](https://travis-ci.org/hypriot/os-rootfs) [![Release](https://img.shields.io/github/release/hypriot/os-rootfs.svg)](https://github.com/hypriot/os-rootfs/releases)
 
+The `os-rootfs` builds the base of all the HypriotOS images. This repo creates a general root filesystem for different CPU architectures without the board specific parts.
+
+This root filesystem
+
+* uses a minimal Debian system
+* adds an user pirate
+* sets a default locale (UTF-8)
+* sets a default timezone
+* ...
+
+
+Here is an example how all the GitHub repos play together:
+
+![Architecture](http://blog.hypriot.com/images/hypriotos-xxx/hypriotos_buildpipeline.jpg)
+
+## Contributing
+
+You can contribute to this repo by forking it and sending us pull requests. Feedback is always welcome!
+
+You can build the root filesystem locally with Docker.
+
 Create builder Docker image
 ```
 make build
@@ -26,8 +47,11 @@ Run container in interactive mode (for testing purposes)
 make shell
 ```
 
+## Build artifacts
 
-# How to run tests
+The output of the build will be in the current directory as a `rootfs-$ARCH.tar.gz` file.
+
+## How to run tests
 
 ### Option 1: Run tests with a single command
 With the following command, all tests for a specific architecture will be executed:
@@ -48,3 +72,7 @@ Now, to run the test, execute
   ```
   BUILD_ARCH=arm64 /builder/test.sh
   ```
+
+## License
+
+MIT - see the [LICENSE](./LICENSE) file for details.
