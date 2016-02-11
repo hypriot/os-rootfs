@@ -29,6 +29,9 @@ test: build
 testshell: build
 	docker run --rm -ti -e TRAVIS_TAG -e HYPRIOT_TAG -v $(shell pwd):/workspace -v $(shell pwd)/test:/test --privileged rootfs-builder bash
 
+shellcheck: build
+	docker run --rm -ti -v $(shell pwd):/workspace rootfs-builder bash -c 'shellcheck builder/*.sh builder/files/usr/local/bin/* builder/files/etc/firstboot.d/*'
+
 tag:
 	git tag ${TAG}
 	git push origin ${TAG}
