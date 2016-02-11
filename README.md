@@ -24,16 +24,19 @@ You can contribute to this repo by forking it and sending us pull requests. Feed
 You can build the root filesystem locally with Docker.
 
 Create builder Docker image
+
 ```
 make build
 ```
 
 Create all rootfs's for all supported ARCH's
+
 ```
 make all
 ```
 
 Create single rootfs's for all supported ARCH's
+
 ```
 make i386
 make amd64
@@ -43,6 +46,7 @@ make mips
 ```
 
 Run container in interactive mode (for testing purposes)
+
 ```
 make shell
 ```
@@ -56,22 +60,29 @@ The output of the build will be in the current directory as a `rootfs-${ARCH}-${
 ### Option 1: Run tests with a single command
 With the following command, all tests for a specific architecture will be executed:
 
-  ```
-  BUILD_ARCH=arm64 make test
-  ```
+```
+BUILD_ARCH=arm64 make test
+```
 
 ### Option 2: Run tests interactively
 If you prefer to have a shorter feedback loop of less than a second, enter the container with
 
-  ```
-  make testshell
-  ```
+```
+make testshell
+```
 
 Now, to run the test, execute
 
-  ```
-  BUILD_ARCH=arm64 /builder/test.sh
-  ```
+```
+BUILD_ARCH=arm64 /builder/test.sh
+```
+
+### Run shellcheck tests
+To run the [shellcheck](https://github.com/koalaman/shellcheck) tests, execute
+
+```
+make shellcheck
+```
 
 ## License
 
