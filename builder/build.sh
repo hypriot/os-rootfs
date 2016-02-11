@@ -37,7 +37,7 @@ else
   DEBOOTSTRAP_CMD="qemu-debootstrap"
 
   # Tell Linux how to start binaries that need emulation to use Qemu
-  update-binfmts --enable qemu-${QEMU_ARCH}
+  update-binfmts --enable "qemu-${QEMU_ARCH}"
 fi
 
 # Debootstrap a minimal Debian Jessie rootfs
@@ -50,41 +50,41 @@ ${DEBOOTSTRAP_CMD} \
   http://ftp.debian.org/debian
 
 # modify/add image files directly
-cp -R /builder/files/* $ROOTFS_DIR/
+cp -R /builder/files/* "$ROOTFS_DIR/"
 
 # set up mount points for the pseudo filesystems
-mkdir -p $ROOTFS_DIR/{proc,sys,dev/pts}
+mkdir -p "$ROOTFS_DIR/proc" "$ROOTFS_DIR/sys" "$ROOTFS_DIR/dev/pts"
 
-mount -o bind /dev $ROOTFS_DIR/dev
-mount -o bind /dev/pts $ROOTFS_DIR/dev/pts
-mount -t proc none $ROOTFS_DIR/proc
-mount -t sysfs none $ROOTFS_DIR/sys
+mount -o bind /dev "$ROOTFS_DIR/dev"
+mount -o bind /dev/pts "$ROOTFS_DIR/dev/pts"
+mount -t proc none "$ROOTFS_DIR/proc"
+mount -t sysfs none "$ROOTFS_DIR/sys"
 
 # make our build directory the current root
 # and install the Rasberry Pi firmware, kernel packages,
 # docker tools and some customizations
-chroot $ROOTFS_DIR \
+chroot "$ROOTFS_DIR" \
        /usr/bin/env \
        HYPRIOT_HOSTNAME=$HYPRIOT_HOSTNAME \
        HYPRIOT_GROUPNAME=$HYPRIOT_GROUPNAME \
        HYPRIOT_USERNAME=$HYPRIOT_USERNAME \
        HYPRIOT_PASSWORD=$HYPRIOT_PASSWORD \
-       HYPRIOT_TAG=$HYPRIOT_TAG \
-       BUILD_ARCH=$BUILD_ARCH \
+       HYPRIOT_TAG="$HYPRIOT_TAG" \
+       BUILD_ARCH="$BUILD_ARCH" \
        /bin/bash < /builder/chroot-script.sh
 
 # unmount pseudo filesystems
-umount -l $ROOTFS_DIR/dev/pts
-umount -l $ROOTFS_DIR/dev
-umount -l $ROOTFS_DIR/proc
-umount -l $ROOTFS_DIR/sys
+umount -l "$ROOTFS_DIR/dev/pts"
+umount -l "$ROOTFS_DIR/dev"
+umount -l "$ROOTFS_DIR/proc"
+umount -l "$ROOTFS_DIR/sys"
 
 # ensure that there are no leftover artifacts in the pseudo filesystems
-rm -rf $ROOTFS_DIR/{dev,sys,proc}/*
+rm -rf "$ROOTFS_DIR/{dev,sys,proc}/*"
 
 # Package rootfs tarball
 umask 0000
-tar -czf "/workspace/rootfs-${BUILD_ARCH}.tar.gz" -C "${ROOTFS_DIR}/" .
+tar -czf "/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_TAG}.tar.gz" -C "${ROOTFS_DIR}/" .
 
 # Test if rootfs is OK
 /builder/test.sh

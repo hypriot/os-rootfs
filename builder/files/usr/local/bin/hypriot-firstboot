@@ -3,9 +3,8 @@ set -ex
 
 
 for file in /etc/firstboot.d/*; do
-  source $file
+  source "$file"
 done
 
 # do not run firstboot scripts after first time again
 systemctl disable hypriot-firstboot.service
-

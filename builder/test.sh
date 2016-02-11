@@ -9,7 +9,7 @@ fi
 # Build Debian rootfs for ARCH={armhf,arm64,mips,i386,amd64}
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
-ROOTFS_TAR="/workspace/rootfs-${BUILD_ARCH}.tar.gz"
+ROOTFS_TAR="/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_TAG}.tar.gz"
 
 # Cleanup
 echo "Testing: BUILD_ARCH=${BUILD_ARCH}"

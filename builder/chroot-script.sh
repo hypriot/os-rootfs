@@ -1,4 +1,4 @@
-#! /usr/bash 
+#! /usr/bash
 set -ex
 
 ### configure Debian Jessie base ###
@@ -37,7 +37,7 @@ systemctl enable systemd-networkd
 # configure and enable resolved
 ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
 DEST=$(readlink -m /etc/resolv.conf)
-mkdir -p $(dirname $DEST)
+mkdir -p "$(dirname "$DEST")"
 touch /etc/resolv.conf
 systemctl enable systemd-resolved
 
@@ -62,13 +62,13 @@ echo "$HYPRIOT_HOSTNAME" > /etc/hostname
 cp /etc/skel/{.bash_prompt,.bashrc,.profile} /root/
 
 # install Hypriot group and user
-addgroup --system --quiet $HYPRIOT_GROUPNAME
-useradd -m $HYPRIOT_USERNAME --group $HYPRIOT_GROUPNAME --shell /bin/bash
+addgroup --system --quiet "$HYPRIOT_GROUPNAME"
+useradd -m "$HYPRIOT_USERNAME" --group "$HYPRIOT_GROUPNAME" --shell /bin/bash
 echo "$HYPRIOT_USERNAME:$HYPRIOT_PASSWORD" | /usr/sbin/chpasswd
 
 # add user to sudoers group
-echo "$HYPRIOT_USERNAME ALL=NOPASSWD: ALL" > /etc/sudoers.d/user-$HYPRIOT_USERNAME
-chmod 0440 /etc/sudoers.d/user-$HYPRIOT_USERNAME
+echo "$HYPRIOT_USERNAME ALL=NOPASSWD: ALL" > "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
+chmod 0440 "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
 
 # set HypriotOS version infos
 echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" >> /etc/os-release

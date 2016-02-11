@@ -3,14 +3,15 @@ services:
   - docker
 language: bash
 script:
+  - make shellcheck
   - HYPRIOT_TAG=${TRAVIS_TAG} make arm64
   - HYPRIOT_TAG=${TRAVIS_TAG} make armhf
 deploy:
   provider: releases
   skip_cleanup: true
   file:
-    - rootfs-armhf.tar.gz
-    - rootfs-arm64.tar.gz
+    - rootfs-armhf-${TRAVIS_TAG}.tar.gz
+    - rootfs-arm64-${TRAVIS_TAG}.tar.gz
   on:
     tags: true
     repo: hypriot/os-rootfs
