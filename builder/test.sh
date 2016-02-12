@@ -1,17 +1,17 @@
 #!/bin/bash
 set +ex
-# This script should be run inside of a Docker container only
+# this script should be run inside of a Docker container only
 if [ ! -f /.dockerinit ]; then
   echo "ERROR: script works in Docker only!"
   exit 1
 fi
 
-# Build Debian rootfs for ARCH={armhf,arm64,mips,i386,amd64}
+# build Debian rootfs for ARCH={armhf,arm64,mips,i386,amd64}
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 ROOTFS_TAR="/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_OS_VERSION}.tar.gz"
 
-# Cleanup
+# cleanup
 echo "Testing: BUILD_ARCH=${BUILD_ARCH}"
 mkdir -p /workspace
 if [ ! -d "${ROOTFS_DIR}" ]; then
@@ -23,5 +23,5 @@ if [ ! -d "${ROOTFS_DIR}" ]; then
   tar -xzf "${ROOTFS_TAR}" -C "${ROOTFS_DIR}/"
 fi
 
-# Test if rootfs is OK
+# test if rootfs is OK
 cd "${ROOTFS_DIR}" && rspec --format documentation --color /builder/test
