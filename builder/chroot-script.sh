@@ -72,4 +72,4 @@ chmod 0440 "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
 
 # set HypriotOS version infos
 echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" >> /etc/os-release
-echo "HYPRIOT_TAG=\"${HYPRIOT_TAG}\"" >> /etc/os-release
+echo "HYPRIOT_OS_VERSION=\"${HYPRIOT_OS_VERSION}\"" >> /etc/os-release

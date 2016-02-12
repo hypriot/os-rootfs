@@ -53,7 +53,7 @@ make shell
 
 ## Build artifacts
 
-The output of the build will be in the current directory as a `rootfs-${ARCH}-${HYPRIOT_TAG}.tar.gz` file.
+The output of the build will be in the current directory as a `rootfs-${ARCH}-${HYPRIOT_OS_VERSION}.tar.gz` file.
 
 ## How to run tests
 

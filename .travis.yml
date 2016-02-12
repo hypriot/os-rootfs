@@ -4,8 +4,8 @@ services:
 language: bash
 script:
   - make shellcheck
-  - HYPRIOT_TAG=${TRAVIS_TAG} make arm64
-  - HYPRIOT_TAG=${TRAVIS_TAG} make armhf
+  - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make arm64
+  - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make armhf
 branches:
   only:
     - master

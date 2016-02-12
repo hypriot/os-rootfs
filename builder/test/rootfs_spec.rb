@@ -95,7 +95,7 @@ end
 describe file('etc/os-release') do
   it { should be_file }
   its(:content) { should contain /HYPRIOT_OS=/ }
-  its(:content) { should contain /HYPRIOT_TAG=/ }
+  its(:content) { should contain /HYPRIOT_OS_VERSION=/ }
   if ENV.fetch('TRAVIS_TAG','') != ''
     its(:content) { should_not contain /dirty/ }
   end
