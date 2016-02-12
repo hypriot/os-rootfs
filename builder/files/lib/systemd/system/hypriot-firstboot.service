@@ -1,5 +1,6 @@
 [Unit]
 Description=run task that need to be run on first boot only
+ConditionPathExists=!/etc/hypriot-firstboot_not_to_be_run
 
 [Service]
 Type=oneshot

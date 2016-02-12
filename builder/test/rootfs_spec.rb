@@ -137,4 +137,8 @@ describe "Firstboot Systemd Service" do
     expect(script).to exist
   end
 
+  describe file('etc/hypriot-firstboot_not_to_be_run') do
+    it { should_not be_file }
+  end
+
 end

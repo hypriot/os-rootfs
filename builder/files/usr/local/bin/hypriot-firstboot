@@ -1,10 +1,9 @@
 #!/bin/bash
 set -ex
 
-
 for file in /etc/firstboot.d/*; do
   source "$file"
 done
 
 # do not run firstboot scripts after first time again
-systemctl disable hypriot-firstboot.service
+touch /etc/hypriot-firstboot_not_to_be_run
