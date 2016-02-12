@@ -92,6 +92,21 @@ describe file('etc/skel/.profile') do
   it { should be_file }
 end
 
+describe file('etc/motd') do
+  it { should be_file }
+  its(:content) { should contain /^HypriotOS / }
+end
+
+describe file('etc/issue') do
+  it { should be_file }
+  its(:content) { should contain /^HypriotOS / }
+end
+
+describe file('etc/issue.net') do
+  it { should be_file }
+  its(:content) { should contain /^HypriotOS / }
+end
+
 describe file('etc/os-release') do
   it { should be_file }
   its(:content) { should contain /HYPRIOT_OS=/ }

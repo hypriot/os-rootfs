@@ -1,4 +1,4 @@
-#! /usr/bash
+#!/usr/bash
 set -ex
 
 ### configure Debian Jessie base ###
