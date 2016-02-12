@@ -20,7 +20,7 @@ HYPRIOT_PASSWORD="hypriot"
 # - Debian amd64 = Intel/AMD 64-bit
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
 QEMU_ARCH="${QEMU_ARCH}"
-HYPRIOT_TAG="${HYPRIOT_TAG:-dirty}"
+HYPRIOT_OS_VERSION="${HYPRIOT_OS_VERSION:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 
 # Show TRAVSI_TAG in travis builds
@@ -69,7 +69,7 @@ chroot "$ROOTFS_DIR" \
        HYPRIOT_GROUPNAME=$HYPRIOT_GROUPNAME \
        HYPRIOT_USERNAME=$HYPRIOT_USERNAME \
        HYPRIOT_PASSWORD=$HYPRIOT_PASSWORD \
-       HYPRIOT_TAG="$HYPRIOT_TAG" \
+       HYPRIOT_OS_VERSION="$HYPRIOT_OS_VERSION" \
        BUILD_ARCH="$BUILD_ARCH" \
        /bin/bash < /builder/chroot-script.sh
 
@@ -84,7 +84,7 @@ rm -rf "$ROOTFS_DIR/{dev,sys,proc}/*"
 
 # Package rootfs tarball
 umask 0000
-tar -czf "/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_TAG}.tar.gz" -C "${ROOTFS_DIR}/" .
+tar -czf "/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_OS_VERSION}.tar.gz" -C "${ROOTFS_DIR}/" .
 
 # Test if rootfs is OK
 /builder/test.sh
