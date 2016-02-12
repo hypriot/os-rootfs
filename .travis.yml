@@ -9,7 +9,7 @@ script:
 branches:
   only:
     - master
-    - v*
+    - /^v\d.*$/
 deploy:
   provider: releases
   skip_cleanup: true
