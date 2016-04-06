@@ -90,7 +90,7 @@ chroot "$ROOTFS_DIR" \
        HYPRIOT_PASSWORD=$HYPRIOT_PASSWORD \
        HYPRIOT_OS_VERSION="$HYPRIOT_OS_VERSION" \
        BUILD_ARCH="$BUILD_ARCH" \
-       VARIANT=$VARIANT \
+       VARIANT="$VARIANT" \
        /bin/bash < /builder/chroot-script.sh
 
 # unmount pseudo filesystems
