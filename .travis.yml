@@ -6,6 +6,7 @@ script:
   - make shellcheck
   - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make arm64
   - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make armhf
+  - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make armhf-raspbian
 branches:
   only:
     - master
