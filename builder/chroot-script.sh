@@ -1,24 +1,16 @@
-#!/usr/bash
+#!/bin/bash
 set -ex
 
 ### configure Debian Jessie base ###
-
-# use standard Debian apt repositories
-tee /etc/apt/sources.list << EOF
-deb http://httpredir.debian.org/debian jessie main
-deb-src http://httpredir.debian.org/debian jessie main
-
-deb http://httpredir.debian.org/debian jessie-updates main
-deb-src http://httpredir.debian.org/debian jessie-updates main
-
-deb http://security.debian.org/ jessie/updates main
-deb-src http://security.debian.org/ jessie/updates main
-EOF
+if [[ "${VARIANT}" == "raspbian" ]]; then
+  # for Rasbian we need an extra gpg key to be able to access the repository
+  wget -v http://mirrordirector.raspbian.org/raspbian.public.key -O key
+  apt-key add key
+fi
 
 # upgrade to latest Debian package versions
 apt-get update
 apt-get upgrade -y
-
 
 ### configure network and systemd services ###
 

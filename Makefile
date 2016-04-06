@@ -3,7 +3,7 @@ default: build
 build:
 	docker build -t rootfs-builder .
 
-all: build amd64 i386 arm64 armhf mips
+all: build amd64 i386 arm64 armhf mips armhf-raspbian
 
 amd64: build
 	docker run --rm -e BUILD_ARCH=amd64 -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -v $(shell pwd):/workspace --privileged rootfs-builder
@@ -16,6 +16,9 @@ arm64: build
 
 armhf: build
 	docker run --rm -e BUILD_ARCH=armhf -e QEMU_ARCH=arm -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -v $(shell pwd):/workspace --privileged rootfs-builder
+
+armhf-raspbian: build
+	docker run --rm -e BUILD_ARCH=armhf -e QEMU_ARCH=arm -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -e VARIANT=raspbian -v $(shell pwd):/workspace --privileged rootfs-builder
 
 mips: build
 	docker run --rm -e BUILD_ARCH=mips -e QEMU_ARCH=mips -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -v $(shell pwd):/workspace --privileged rootfs-builder
