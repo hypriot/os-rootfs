@@ -22,6 +22,17 @@ BUILD_ARCH="${BUILD_ARCH:-arm64}"
 QEMU_ARCH="${QEMU_ARCH}"
 HYPRIOT_OS_VERSION="${HYPRIOT_OS_VERSION:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
+DEBOOTSTRAP_URL="http://ftp.debian.org/debian"
+VARIANT="${VARIANT:-debian}"
+DEBOOTSTRAP_KEYRING_OPTION=""
+
+if [[ "${VARIANT}" = "raspbian" ]]; then
+  DEBOOTSTRAP_URL="http://mirrordirector.raspbian.org/raspbian/"
+  DEBOOTSTRAP_KEYRING_OPTION="--keyring=/etc/apt/trusted.gpg"
+
+  # for Rasbian we need an extra gpg key to be able to access the repository
+  wget -q http://mirrordirector.raspbian.org/raspbian.public.key -O - | apt-key add -
+fi
 
 # show TRAVSI_TAG in travis builds
 echo TRAVIS_TAG="${TRAVIS_TAG}"
@@ -42,15 +53,23 @@ fi
 
 # debootstrap a minimal Debian Jessie rootfs
 ${DEBOOTSTRAP_CMD} \
+  ${DEBOOTSTRAP_KEYRING_OPTION} \
   --arch="${BUILD_ARCH}" \
-  --include="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git-core,htop,locales,net-tools,openssh-server,parted,sudo,usbutils" \
+  --include="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git-core,htop,locales,net-tools,openssh-server,parted,sudo,usbutils,wget" \
   --exclude="debfoster" \
   jessie \
   "${ROOTFS_DIR}" \
-  http://ftp.debian.org/debian
+  "${DEBOOTSTRAP_URL}"
 
 # modify/add image files directly
 cp -R /builder/files/* "$ROOTFS_DIR/"
+
+# only keep apt/sources.list files that we need for the current build
+if [[ "$VARIANT" == "debian" ]]; then
+  rm -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie"
+elif [[ "$VARIANT" == "raspbian" ]]; then
+  mv -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie" "$ROOTFS_DIR/etc/apt/sources.list"
+fi
 
 # set up mount points for the pseudo filesystems
 mkdir -p "$ROOTFS_DIR/proc" "$ROOTFS_DIR/sys" "$ROOTFS_DIR/dev/pts"
@@ -71,6 +90,7 @@ chroot "$ROOTFS_DIR" \
        HYPRIOT_PASSWORD=$HYPRIOT_PASSWORD \
        HYPRIOT_OS_VERSION="$HYPRIOT_OS_VERSION" \
        BUILD_ARCH="$BUILD_ARCH" \
+       VARIANT="$VARIANT" \
        /bin/bash < /builder/chroot-script.sh
 
 # unmount pseudo filesystems
@@ -87,4 +107,4 @@ umask 0000
 tar -czf "/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_OS_VERSION}.tar.gz" -C "${ROOTFS_DIR}/" .
 
 # test if rootfs is OK
-/builder/test.sh
+VARIANT="${VARIANT}" /builder/test.sh

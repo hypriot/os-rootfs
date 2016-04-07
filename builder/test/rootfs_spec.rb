@@ -13,12 +13,20 @@ describe file('bin/bash') do
   it { should be_mode 755 }
 end
 
-describe file('etc/apt/sources.list') do
-  it { should be_file }
-  its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie main' }
-  its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie-updates main' }
-  its(:content) { should contain 'deb http://security.debian.org/ jessie/updates main' }
+if ENV['VARIANT'] == 'raspbian'
+  describe file('etc/apt/sources.list') do
+    it { should be_file }
+    its(:content) { should contain 'deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi' }
+  end
+elsif ENV['VARIANT'] == 'debian'
+  describe file('etc/apt/sources.list') do
+    it { should be_file }
+    its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie main' }
+    its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie-updates main' }
+    its(:content) { should contain 'deb http://security.debian.org/ jessie/updates main' }
+  end
 end
+
 
 describe file('etc/systemd/network/eth0.network') do
   it { should be_file }
