@@ -17,6 +17,7 @@ deploy:
   file:
     - rootfs-armhf-${TRAVIS_TAG}.tar.gz
     - rootfs-arm64-${TRAVIS_TAG}.tar.gz
+    - rootfs-armhf-raspbian-${TRAVIS_TAG}.tar.gz
   on:
     tags: true
     repo: hypriot/os-rootfs
