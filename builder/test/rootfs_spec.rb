@@ -28,9 +28,9 @@ elsif ENV['VARIANT'] == 'debian'
 end
 
 
-describe file('etc/systemd/network/eth0.network') do
+describe file('etc/systemd/network/eth.network') do
   it { should be_file }
-  its(:content) { should contain /Name=eth0/ }
+  its(:content) { should contain /Name=eth\*/ }
   its(:content) { should contain /DHCP=yes/ }
 end
 
