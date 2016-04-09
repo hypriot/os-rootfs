@@ -104,7 +104,7 @@ rm -rf "$ROOTFS_DIR/{dev,sys,proc}/*"
 
 # package rootfs tarball
 umask 0000
-tar -czf "/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_OS_VERSION}.tar.gz" -C "${ROOTFS_DIR}/" .
+tar -czf "/workspace/rootfs-${BUILD_ARCH}-${VARIANT}-${HYPRIOT_OS_VERSION}.tar.gz" -C "${ROOTFS_DIR}/" .
 
 # test if rootfs is OK
 VARIANT="${VARIANT}" /builder/test.sh
