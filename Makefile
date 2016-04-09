@@ -27,7 +27,7 @@ shell: build
 	docker run --rm -ti -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -v $(shell pwd):/workspace --privileged rootfs-builder bash
 
 test: build
-	docker run --rm -ti -e BUILD_ARCH=$(BUILD_ARCH) -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -v $(shell pwd):/workspace --privileged rootfs-builder /builder/test.sh
+	docker run --rm -ti -e BUILD_ARCH=$(BUILD_ARCH) -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -e VARIANT -v $(shell pwd):/workspace --privileged rootfs-builder /builder/test.sh
 
 testshell: build
 	docker run --rm -ti -e TRAVIS_TAG -e HYPRIOT_OS_VERSION -v $(shell pwd):/workspace -v $(shell pwd)/test:/test --privileged rootfs-builder bash
