@@ -20,10 +20,10 @@ HYPRIOT_PASSWORD="hypriot"
 # - Debian amd64 = Intel/AMD 64-bit
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
 QEMU_ARCH="${QEMU_ARCH}"
+VARIANT="${VARIANT:-debian}"
 HYPRIOT_OS_VERSION="${HYPRIOT_OS_VERSION:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 DEBOOTSTRAP_URL="http://ftp.debian.org/debian"
-VARIANT="${VARIANT:-debian}"
 DEBOOTSTRAP_KEYRING_OPTION=""
 
 if [[ "${VARIANT}" = "raspbian" ]]; then
