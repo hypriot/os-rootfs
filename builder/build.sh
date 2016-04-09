@@ -67,6 +67,9 @@ cp -R /builder/files/* "$ROOTFS_DIR/"
 # only keep apt/sources.list files that we need for the current build
 if [[ "$VARIANT" == "debian" ]]; then
   rm -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie"
+  # remove raspbian patch of udev rules
+  rm -f "$ROOTFS_DIR/etc/udev/rules.d/75-persistent-net-generator.rules"
+  rm -f "$ROOTFS_DIR/etc/udev/rules.d/99-com.rules"
 elif [[ "$VARIANT" == "raspbian" ]]; then
   mv -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie" "$ROOTFS_DIR/etc/apt/sources.list"
 fi
