@@ -9,6 +9,7 @@ fi
 # build Debian rootfs for ARCH={armhf,arm64,mips,i386,amd64}
 BUILD_ARCH="${BUILD_ARCH:-arm64}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
+HYPRIOT_OS_VERSION="${HYPRIOT_OS_VERSION:-dirty}"
 VARIANT="${VARIANT:-debian}"
 ROOTFS_TAR="/workspace/rootfs-${BUILD_ARCH}-${VARIANT}-${HYPRIOT_OS_VERSION}.tar.gz"
 
