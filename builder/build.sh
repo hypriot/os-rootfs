@@ -67,6 +67,9 @@ cp -R /builder/files/* "$ROOTFS_DIR/"
 # only keep apt/sources.list files that we need for the current build
 if [[ "$VARIANT" == "debian" ]]; then
   rm -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie"
+  # remove raspbian patch of udev rules
+  rm -f "$ROOTFS_DIR/etc/udev/rules.d/75-persistent-net-generator.rules"
+  rm -f "$ROOTFS_DIR/etc/udev/rules.d/99-com.rules"
 elif [[ "$VARIANT" == "raspbian" ]]; then
   mv -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie" "$ROOTFS_DIR/etc/apt/sources.list"
 fi
@@ -104,7 +107,7 @@ rm -rf "$ROOTFS_DIR/{dev,sys,proc}/*"
 
 # package rootfs tarball
 umask 0000
-tar -czf "/workspace/rootfs-${BUILD_ARCH}-${HYPRIOT_OS_VERSION}.tar.gz" -C "${ROOTFS_DIR}/" .
+tar -czf "/workspace/rootfs-${BUILD_ARCH}-${VARIANT}-${HYPRIOT_OS_VERSION}.tar.gz" -C "${ROOTFS_DIR}/" .
 
 # test if rootfs is OK
 VARIANT="${VARIANT}" /builder/test.sh

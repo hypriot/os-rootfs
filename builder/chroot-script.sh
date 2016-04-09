@@ -4,8 +4,7 @@ set -ex
 ### configure Debian Jessie base ###
 if [[ "${VARIANT}" == "raspbian" ]]; then
   # for Rasbian we need an extra gpg key to be able to access the repository
-  wget -v http://mirrordirector.raspbian.org/raspbian.public.key -O key
-  apt-key add key
+  wget -v -O - http://mirrordirector.raspbian.org/raspbian.public.key | apt-key add -
 fi
 
 # upgrade to latest Debian package versions
