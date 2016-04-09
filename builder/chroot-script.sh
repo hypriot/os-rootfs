@@ -14,10 +14,10 @@ apt-get upgrade -y
 
 ### configure network and systemd services ###
 
-# set ethernet interface eth0 to dhcp
-tee /etc/systemd/network/eth0.network << EOF
+# set ethernet interface eth0*to dhcp
+tee /etc/systemd/network/eth.network << EOF
 [Match]
-Name=eth0
+Name=eth*
 
 [Network]
 DHCP=yes
