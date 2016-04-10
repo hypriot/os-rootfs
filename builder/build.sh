@@ -66,9 +66,9 @@ cp -R /builder/files/* "$ROOTFS_DIR/"
 
 # only keep apt/sources.list files that we need for the current build
 if [[ "$VARIANT" == "debian" ]]; then
-  rm -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie"
+  rm -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.jessie"
 elif [[ "$VARIANT" == "raspbian" ]]; then
-  mv -f "$ROOTFS_DIR/etc/apt/sources.list.rasbian.jessie" "$ROOTFS_DIR/etc/apt/sources.list"
+  mv -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.jessie" "$ROOTFS_DIR/etc/apt/sources.list"
 fi
 
 # set up mount points for the pseudo filesystems
