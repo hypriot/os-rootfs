@@ -20,9 +20,6 @@ allow-hotplug eth0
 iface eth0 inet dhcp
 EOF
 
-# enable networkd
-systemctl enable systemd-networkd
-
 # configure and enable resolved
 ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
 DEST=$(readlink -m /etc/resolv.conf)
