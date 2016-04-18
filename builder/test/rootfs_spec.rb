@@ -28,10 +28,10 @@ elsif ENV['VARIANT'] == 'debian'
 end
 
 
-describe file('etc/systemd/network/eth.network') do
+describe file('etc/network/interfaces.d/eth0') do
   it { should be_file }
-  its(:content) { should contain /Name=eth\*/ }
-  its(:content) { should contain /DHCP=yes/ }
+  its(:content) { should contain /allow-hotplug eth0/ }
+  its(:content) { should contain /iface eth0 inet dhcp/ }
 end
 
 describe file('etc/resolv.conf') do
