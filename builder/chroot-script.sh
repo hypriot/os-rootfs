@@ -11,19 +11,14 @@ fi
 apt-get update
 apt-get upgrade -y
 
-### configure network and systemd services ###
 
-# set ethernet interface eth0*to dhcp
-tee /etc/systemd/network/eth.network << EOF
-[Match]
-Name=eth*
+### configure network ###
 
-[Network]
-DHCP=yes
+# set ethernet interface eth0 to dhcp
+tee /etc/network/interfaces.d/eth0 << EOF
+allow-hotplug eth0
+iface eth0 inet dhcp
 EOF
-
-# enable networkd
-systemctl enable systemd-networkd
 
 # configure and enable resolved
 ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
