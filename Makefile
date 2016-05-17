@@ -1,6 +1,7 @@
 default: build
 
 build:
+	docker build -t rootfs-builder . || true
 	docker build -t rootfs-builder .
 
 all: build amd64 i386 arm64-debian armhf-debian mips armhf-raspbian
