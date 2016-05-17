@@ -2,11 +2,14 @@ sudo: required
 services:
   - docker
 language: bash
+env:
+  matrix:
+    - MAKE_TARGET=arm64-debian
+    - MAKE_TARGET=armhf-debian
+    - MAKE_TARGET=armhf-raspbian
 script:
   - make shellcheck
-  - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make arm64
-  - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make armhf
-  - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make armhf-raspbian
+  - HYPRIOT_OS_VERSION=${TRAVIS_TAG} make ${MAKE_TARGET}
 branches:
   only:
     - master
@@ -15,12 +18,8 @@ deploy:
   provider: releases
   skip_cleanup: true
   file:
-    - rootfs-armhf-debian-${TRAVIS_TAG}.tar.gz
-    - rootfs-armhf-debian-${TRAVIS_TAG}.tar.gz.sha256
-    - rootfs-arm64-debian-${TRAVIS_TAG}.tar.gz
-    - rootfs-arm64-debian-${TRAVIS_TAG}.tar.gz.sha256
-    - rootfs-armhf-raspbian-${TRAVIS_TAG}.tar.gz
-    - rootfs-armhf-raspbian-${TRAVIS_TAG}.tar.gz.sha256
+    - rootfs-${MAKE_TARGET}-${TRAVIS_TAG}.tar.gz
+    - rootfs-${MAKE_TARGET}-${TRAVIS_TAG}.tar.gz.sha256
   on:
     tags: true
     repo: hypriot/os-rootfs
