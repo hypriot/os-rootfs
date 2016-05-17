@@ -2,8 +2,6 @@ sudo: required
 services:
   - docker
 language: bash
-cache:
-  - apt
 env:
   matrix:
     - MAKE_TARGET=arm64-debian
