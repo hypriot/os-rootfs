@@ -1,18 +1,11 @@
-FROM debian:jessie
+FROM hypriot/image-builder:latest
 
 RUN apt-get update && apt-get install -y \
+    binfmt-support \
     qemu \
     qemu-user-static \
-    binfmt-support \
-    debootstrap \
-    elfutils \
-    ruby \
-    shellcheck \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
-
-RUN gem update --no-document --system && \
-    gem install --no-document serverspec
 
 COPY builder /builder/
 
