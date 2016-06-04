@@ -1,6 +1,6 @@
 #!/bin/bash
 set -ex
-source ./gpgcheck.sh || source builder/gpgcheck.sh
+source builder/gpgcheck.sh
 
 # this script should be run inside of a Docker container only
 if [ ! -f /.dockerenv ]; then
