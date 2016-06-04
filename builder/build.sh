@@ -1,5 +1,7 @@
 #!/bin/bash
 set -ex
+source ./gpgcheck.sh
+
 # this script should be run inside of a Docker container only
 if [ ! -f /.dockerenv ]; then
   echo "ERROR: script works in Docker only!"
@@ -31,7 +33,8 @@ if [[ "${VARIANT}" = "raspbian" ]]; then
   DEBOOTSTRAP_KEYRING_OPTION="--keyring=/etc/apt/trusted.gpg"
 
   # for Rasbian we need an extra gpg key to be able to access the repository
-  wget -q http://mirrordirector.raspbian.org/raspbian.public.key -O - | apt-key add -
+  get_gpg A0DA38D0D76E8B5D638872819165938D90FDDD2E http://mirrordirector.raspbian.org/raspbian.public.key
+
 fi
 
 # show TRAVSI_TAG in travis builds
