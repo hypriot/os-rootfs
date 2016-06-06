@@ -33,7 +33,8 @@ if [[ "${VARIANT}" = "raspbian" ]]; then
   DEBOOTSTRAP_KEYRING_OPTION="--keyring=/etc/apt/trusted.gpg"
 
   # for Rasbian we need an extra gpg key to be able to access the repository
-  get_gpg A0DA38D0D76E8B5D638872819165938D90FDDD2E http://mirrordirector.raspbian.org/raspbian.public.key
+  wget -v -O "${ROOTFS_DIR}/tmp/raspbian.public.key" http://mirrordirector.raspbian.org/raspbian.public.key
+  get_gpg A0DA38D0D76E8B5D638872819165938D90FDDD2E "${ROOTFS_DIR}/tmp/raspbian.public.key"
 
 fi
 
