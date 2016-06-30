@@ -40,9 +40,9 @@ Create single rootfs's for all supported ARCH's
 ```
 make i386
 make amd64
-make armhf
+make armhf-debian
 make armhf-raspbian
-make arm64
+make arm64-debian
 make mips
 ```
 
