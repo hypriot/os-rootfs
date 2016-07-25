@@ -117,7 +117,12 @@ end
 
 describe file('etc/os-release') do
   it { should be_file }
-  its(:content) { should contain /ID=debian/ }
+  if ENV['VARIANT'] == 'raspbian'
+    its(:content) { should contain /ID=raspbian/ }
+    its(:content) { should contain /ID_LIKE=debian/ }
+  else
+    its(:content) { should contain /ID=debian/ }
+  end
   its(:content) { should contain /HYPRIOT_OS=/ }
   its(:content) { should contain /HYPRIOT_OS_VERSION=/ }
   if ENV.fetch('TRAVIS_TAG','') != ''
