@@ -62,6 +62,10 @@ chmod 0440 "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
 echo "Making /etc/os-release compatible with docker-machine"
 sed -i 's/ID=raspbian/ID=debian/' /usr/lib/os-release
 
+# cleanup APT cache and lists
+apt-get clean
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # set HypriotOS version infos
 echo "HYPRIOT_OS=\"HypriotOS/${BUILD_ARCH}\"" >> /etc/os-release
 echo "HYPRIOT_OS_VERSION=\"${HYPRIOT_OS_VERSION}\"" >> /etc/os-release
