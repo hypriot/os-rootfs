@@ -58,10 +58,6 @@ echo "$HYPRIOT_USERNAME:$HYPRIOT_PASSWORD" | /usr/sbin/chpasswd
 echo "$HYPRIOT_USERNAME ALL=NOPASSWD: ALL" > "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
 chmod 0440 "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
 
-# make /etc/os-release compatible with docker-machine
-echo "Making /etc/os-release compatible with docker-machine"
-sed -i 's/ID=raspbian/ID=debian/' /usr/lib/os-release
-
 # cleanup APT cache and lists
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
