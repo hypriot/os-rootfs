@@ -9,10 +9,10 @@ if [ ! -f /.dockerenv ]; then
 fi
 
 # Hypriot common settings
-HYPRIOT_HOSTNAME="black-pearl"
-HYPRIOT_GROUPNAME="docker"
-HYPRIOT_USERNAME="pirate"
-HYPRIOT_PASSWORD="hypriot"
+HYPRIOT_HOSTNAME="${HYPRIOT_HOSTNAME:-black-pearl}"
+HYPRIOT_GROUPNAME="${HYPRIOT_GROUPNAME:-docker}"
+HYPRIOT_USERNAME="${HYPRIOT_USERNAME:-pirate}"
+HYPRIOT_PASSWORD="${HYPRIOT_PASSWORD:-hypriot}"
 
 # build Debian rootfs for ARCH={armhf,arm64,mips,i386,amd64}
 # - Debian armhf = ARMv6/ARMv7
@@ -89,10 +89,10 @@ mount -t sysfs none "$ROOTFS_DIR/sys"
 # docker tools and some customizations
 chroot "$ROOTFS_DIR" \
        /usr/bin/env \
-       HYPRIOT_HOSTNAME=$HYPRIOT_HOSTNAME \
-       HYPRIOT_GROUPNAME=$HYPRIOT_GROUPNAME \
-       HYPRIOT_USERNAME=$HYPRIOT_USERNAME \
-       HYPRIOT_PASSWORD=$HYPRIOT_PASSWORD \
+       HYPRIOT_HOSTNAME="$HYPRIOT_HOSTNAME" \
+       HYPRIOT_GROUPNAME="$HYPRIOT_GROUPNAME" \
+       HYPRIOT_USERNAME="$HYPRIOT_USERNAME" \
+       HYPRIOT_PASSWORD="$HYPRIOT_PASSWORD" \
        HYPRIOT_OS_VERSION="$HYPRIOT_OS_VERSION" \
        BUILD_ARCH="$BUILD_ARCH" \
        VARIANT="$VARIANT" \
@@ -117,4 +117,4 @@ sha256sum "${ARCHIVE_NAME}" > "${ARCHIVE_NAME}.sha256"
 cd -
 
 # test if rootfs is OK
-VARIANT="${VARIANT}" /builder/test.sh
+HYPRIOT_HOSTNAME="${HYPRIOT_HOSTNAME}" HYPRIOT_GROUPNAME="${HYPRIOT_GROUPNAME}" HYPRIOT_USERNAME="${HYPRIOT_USERNAME}" HYPRIOT_PASSWORD="${HYPRIOT_PASSWORD}" VARIANT="${VARIANT}" /builder/test.sh
