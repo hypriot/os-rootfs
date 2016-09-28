@@ -47,6 +47,7 @@ dpkg-reconfigure -f noninteractive locales
 echo "$HYPRIOT_HOSTNAME" > /etc/hostname
 
 # install skeleton files from /etc/skel for root user
+sed -i -- "s/pirate/$HYPRIOT_USERNAME/g" /etc/skel/.profile
 cp /etc/skel/{.bash_prompt,.bashrc,.profile} /root/
 
 # install Hypriot group and user
