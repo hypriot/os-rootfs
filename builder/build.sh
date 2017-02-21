@@ -27,6 +27,8 @@ HYPRIOT_OS_VERSION="${HYPRIOT_OS_VERSION:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 DEBOOTSTRAP_URL="http://ftp.debian.org/debian"
 DEBOOTSTRAP_KEYRING_OPTION=""
+DEFAULT_PACKAGES_INCLUDE="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git-core,htop,locales,net-tools,openssh-server,parted,sudo,usbutils,wget,libpam-systemd"
+DEFAULT_PACKAGES_EXCLUDE="debfoster"
 
 if [[ "${VARIANT}" = "raspbian" ]]; then
   DEBOOTSTRAP_URL="http://mirrordirector.raspbian.org/raspbian/"
@@ -60,8 +62,8 @@ fi
 ${DEBOOTSTRAP_CMD} \
   ${DEBOOTSTRAP_KEYRING_OPTION} \
   --arch="${BUILD_ARCH}" \
-  --include="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git-core,htop,locales,net-tools,openssh-server,parted,sudo,usbutils,wget" \
-  --exclude="debfoster" \
+  --include="${DEFAULT_PACKAGES_INCLUDE}" \
+  --exclude="${DEFAULT_PACKAGES_EXCLUDE}" \
   jessie \
   "${ROOTFS_DIR}" \
   "${DEBOOTSTRAP_URL}"
