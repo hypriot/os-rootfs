@@ -41,7 +41,7 @@ if [[ "${VARIANT}" = "raspbian" ]]; then
 
 fi
 
-# show TRAVSI_TAG in travis builds
+# show TRAVIS_TAG in travis builds
 echo TRAVIS_TAG="${TRAVIS_TAG}"
 
 # cleanup
