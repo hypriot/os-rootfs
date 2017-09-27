@@ -47,17 +47,7 @@ dpkg-reconfigure -f noninteractive locales
 echo "$HYPRIOT_HOSTNAME" > /etc/hostname
 
 # install skeleton files from /etc/skel for root user
-sed -i -- "s/pirate/$HYPRIOT_USERNAME/g" /etc/skel/.profile
 cp /etc/skel/{.bash_prompt,.bashrc,.profile} /root/
-
-# install Hypriot group and user
-addgroup --system --quiet "$HYPRIOT_GROUPNAME"
-useradd -m "$HYPRIOT_USERNAME" --group "$HYPRIOT_GROUPNAME" --shell /bin/bash
-echo "$HYPRIOT_USERNAME:$HYPRIOT_PASSWORD" | /usr/sbin/chpasswd
-
-# add user to sudoers group
-echo "$HYPRIOT_USERNAME ALL=NOPASSWD: ALL" > "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
-chmod 0440 "/etc/sudoers.d/user-$HYPRIOT_USERNAME"
 
 # cleanup APT cache and lists
 apt-get clean

@@ -1,6 +1,6 @@
 # ~/.profile: executed by Bourne-compatible login shells.
 
-if [ "$USER" == "pirate" ]; then
+if [ "$USER" != "root" ]; then 
   PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"
   export PATH
 fi
