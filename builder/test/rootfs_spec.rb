@@ -62,28 +62,6 @@ describe file('etc/hostname') do
   its(:content) { should contain /^#{ENV['HYPRIOT_HOSTNAME']}$/ }
 end
 
-describe file('etc/group') do
-  it { should be_file }
-  its(:content) { should contain /^#{ENV['HYPRIOT_GROUPNAME']}:x:.*:#{ENV['HYPRIOT_USERNAME']}/ }
-  its(:content) { should contain /^#{ENV['HYPRIOT_USERNAME']}:x:/ }
-end
-
-describe file('etc/passwd') do
-  it { should be_file }
-  its(:content) { should contain /^#{ENV['HYPRIOT_USERNAME']}:/ }
-end
-
-describe file('etc/shadow') do
-  it { should be_file }
-  its(:content) { should contain /^#{ENV['HYPRIOT_USERNAME']}:/ }
-end
-
-describe file("etc/sudoers.d/user-#{ENV['HYPRIOT_USERNAME']}") do
-  it { should be_file }
-  it { should be_mode 440 }
-  its(:content) { should contain /^#{ENV['HYPRIOT_USERNAME']} ALL=NOPASSWD: ALL$/ }
-end
-
 describe file('root/.bash_prompt') do
   it { should be_file }
 end
