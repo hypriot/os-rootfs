@@ -24,7 +24,7 @@ HYPRIOT_OS_VERSION="${HYPRIOT_OS_VERSION:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 DEBOOTSTRAP_URL="http://ftp.debian.org/debian"
 DEBOOTSTRAP_KEYRING_OPTION=""
-DEFAULT_PACKAGES_INCLUDE="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git-core,htop,locales,net-tools,openssh-server,parted,sudo,usbutils,wget,libpam-systemd"
+DEFAULT_PACKAGES_INCLUDE="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git-core,htop,locales,net-tools,ntp,openssh-server,parted,sudo,usbutils,wget,libpam-systemd"
 DEFAULT_PACKAGES_EXCLUDE="debfoster"
 
 if [[ "${VARIANT}" = "raspbian" ]]; then
