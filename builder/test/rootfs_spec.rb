@@ -42,11 +42,6 @@ describe file('run/systemd/resolve/resolv.conf') do
   it { should be_file }
 end
 
-describe file('etc/ssh/sshd_config') do
-  it { should be_file }
-  its(:content) { should contain /^PermitRootLogin without-password/ }
-end
-
 describe file('etc/shadow') do
   it { should be_file }
   its(:content) { should contain /^root:\*:/ }
