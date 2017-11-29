@@ -61,7 +61,7 @@ ${DEBOOTSTRAP_CMD} \
   --arch="${BUILD_ARCH}" \
   --include="${DEFAULT_PACKAGES_INCLUDE}" \
   --exclude="${DEFAULT_PACKAGES_EXCLUDE}" \
-  jessie \
+  stretch \
   "${ROOTFS_DIR}" \
   "${DEBOOTSTRAP_URL}"
 
@@ -70,9 +70,9 @@ cp -R /builder/files/* "$ROOTFS_DIR/"
 
 # only keep apt/sources.list files that we need for the current build
 if [[ "$VARIANT" == "debian" ]]; then
-  rm -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.jessie"
+  rm -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.stretch"
 elif [[ "$VARIANT" == "raspbian" ]]; then
-  mv -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.jessie" "$ROOTFS_DIR/etc/apt/sources.list"
+  mv -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.stretch" "$ROOTFS_DIR/etc/apt/sources.list"
 fi
 
 # set up mount points for the pseudo filesystems
