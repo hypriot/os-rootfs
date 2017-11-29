@@ -106,11 +106,11 @@ rm -rf "$ROOTFS_DIR/{dev,sys,proc}/*"
 # package rootfs tarball
 umask 0000
 
-cd /workspace
+pushd /workspace
 ARCHIVE_NAME="rootfs-${BUILD_ARCH}-${VARIANT}-${HYPRIOT_OS_VERSION}.tar.gz"
 tar -czf "${ARCHIVE_NAME}" -C "${ROOTFS_DIR}/" .
 sha256sum "${ARCHIVE_NAME}" > "${ARCHIVE_NAME}.sha256"
-cd -
+popd
 
 # test if rootfs is OK
 HYPRIOT_HOSTNAME="${HYPRIOT_HOSTNAME}" VARIANT="${VARIANT}" /builder/test.sh
