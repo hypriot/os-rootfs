@@ -55,7 +55,7 @@ else
   update-binfmts --enable "qemu-${QEMU_ARCH}"
 fi
 
-# debootstrap a minimal Debian Jessie rootfs
+# debootstrap a minimal Debian Stretch rootfs
 ${DEBOOTSTRAP_CMD} \
   ${DEBOOTSTRAP_KEYRING_OPTION} \
   --arch="${BUILD_ARCH}" \

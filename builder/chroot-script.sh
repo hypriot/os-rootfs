@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-### configure Debian Jessie base ###
+### configure Debian Stretch base ###
 if [[ "${VARIANT}" == "raspbian" ]]; then
   # for Raspbian we need an extra gpg key to be able to access the repository
   # install preloaded GPG key for raspbian if it exists
