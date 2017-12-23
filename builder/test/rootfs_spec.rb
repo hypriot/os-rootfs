@@ -16,14 +16,14 @@ end
 if ENV['VARIANT'] == 'raspbian'
   describe file('etc/apt/sources.list') do
     it { should be_file }
-    its(:content) { should contain 'deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi' }
+    its(:content) { should contain 'deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi' }
   end
 elsif ENV['VARIANT'] == 'debian'
   describe file('etc/apt/sources.list') do
     it { should be_file }
-    its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie main' }
-    its(:content) { should contain 'deb http://httpredir.debian.org/debian jessie-updates main' }
-    its(:content) { should contain 'deb http://security.debian.org/ jessie/updates main' }
+    its(:content) { should contain 'deb http://httpredir.debian.org/debian stretch main' }
+    its(:content) { should contain 'deb http://httpredir.debian.org/debian stretch-updates main' }
+    its(:content) { should contain 'deb http://security.debian.org/ stretch/updates main' }
   end
 end
 
@@ -40,11 +40,6 @@ end
 
 describe file('run/systemd/resolve/resolv.conf') do
   it { should be_file }
-end
-
-describe file('etc/ssh/sshd_config') do
-  it { should be_file }
-  its(:content) { should contain /^PermitRootLogin without-password/ }
 end
 
 describe file('etc/shadow') do
