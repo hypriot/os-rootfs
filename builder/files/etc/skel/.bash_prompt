@@ -3,7 +3,7 @@
 
 default_username='unknown'
 OSNAME="HypriotOS: "
-PROMPTCHAR="\$"
+PROMPTCHAR='\$'
 
 # determine OS type
 if [ "$(uname -s)" = Darwin ]; then
