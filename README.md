@@ -85,6 +85,14 @@ To run the [shellcheck](https://github.com/koalaman/shellcheck) tests, execute
 make shellcheck
 ```
 
+
+## Buy us a beer!
+
+This FLOSS software is funded by donations only. Please support us to maintain and further improve it!
+
+<a href="https://liberapay.com/Hypriot/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
+
 ## License
 
 MIT - see the [LICENSE](./LICENSE) file for details.
