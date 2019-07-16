@@ -24,7 +24,7 @@ HYPRIOT_OS_VERSION="${HYPRIOT_OS_VERSION:-dirty}"
 ROOTFS_DIR="/debian-${BUILD_ARCH}"
 DEBOOTSTRAP_URL="http://ftp.debian.org/debian"
 DEBOOTSTRAP_KEYRING_OPTION=""
-DEFAULT_PACKAGES_INCLUDE="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git-core,htop,locales,net-tools,ntp,openssh-server,parted,sudo,usbutils,wget,libpam-systemd"
+DEFAULT_PACKAGES_INCLUDE="apt-transport-https,avahi-daemon,bash-completion,binutils,ca-certificates,curl,git,htop,locales,net-tools,ntp,openssh-server,parted,sudo,usbutils,wget,libpam-systemd"
 DEFAULT_PACKAGES_EXCLUDE="debfoster"
 
 if [[ "${VARIANT}" = "raspbian" ]]; then
@@ -55,13 +55,13 @@ else
   update-binfmts --enable "qemu-${QEMU_ARCH}"
 fi
 
-# debootstrap a minimal Debian Jessie rootfs
+# debootstrap a minimal Debian Buster rootfs
 ${DEBOOTSTRAP_CMD} \
   ${DEBOOTSTRAP_KEYRING_OPTION} \
   --arch="${BUILD_ARCH}" \
   --include="${DEFAULT_PACKAGES_INCLUDE}" \
   --exclude="${DEFAULT_PACKAGES_EXCLUDE}" \
-  stretch \
+  buster \
   "${ROOTFS_DIR}" \
   "${DEBOOTSTRAP_URL}"
 
@@ -70,9 +70,9 @@ cp -R /builder/files/* "$ROOTFS_DIR/"
 
 # only keep apt/sources.list files that we need for the current build
 if [[ "$VARIANT" == "debian" ]]; then
-  rm -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.stretch"
+  rm -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian"
 elif [[ "$VARIANT" == "raspbian" ]]; then
-  mv -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian.stretch" "$ROOTFS_DIR/etc/apt/sources.list"
+  mv -f "$ROOTFS_DIR/etc/apt/sources.list.raspbian" "$ROOTFS_DIR/etc/apt/sources.list"
 fi
 
 # set up mount points for the pseudo filesystems
