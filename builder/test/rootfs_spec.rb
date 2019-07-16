@@ -16,14 +16,14 @@ end
 if ENV['VARIANT'] == 'raspbian'
   describe file('etc/apt/sources.list') do
     it { should be_file }
-    its(:content) { should contain 'deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi' }
+    its(:content) { should contain 'deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi' }
   end
 elsif ENV['VARIANT'] == 'debian'
   describe file('etc/apt/sources.list') do
     it { should be_file }
-    its(:content) { should contain 'deb http://httpredir.debian.org/debian stretch main' }
-    its(:content) { should contain 'deb http://httpredir.debian.org/debian stretch-updates main' }
-    its(:content) { should contain 'deb http://security.debian.org/ stretch/updates main' }
+    its(:content) { should contain 'deb http://httpredir.debian.org/debian buster main' }
+    its(:content) { should contain 'deb http://httpredir.debian.org/debian buster-updates main' }
+    its(:content) { should contain 'deb http://security.debian.org/ buster/updates main' }
   end
 end
 
